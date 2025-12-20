@@ -301,13 +301,20 @@ def make_pdf(df):
 
     return pdf.output(dest="S")
 
+# =====================================================
+# WEEKLY PDF EXPORT
+# =====================================================
+st.header("📄 Weekly Sector Rotation Report")
+
+pdf_bytes = make_pdf(df_rotation)   # ✅ THIS WAS MISSING
 
 st.download_button(
-    "📥 Download Weekly PDF Report",
-    pdf_bytes,
-    "sector_rotation_weekly_report.pdf",
-    "application/pdf"
+    label="📥 Download Weekly PDF Report",
+    data=pdf_bytes,
+    file_name="sector_rotation_weekly_report.pdf",
+    mime="application/pdf"
 )
+
 
 st.markdown("""
 ---
