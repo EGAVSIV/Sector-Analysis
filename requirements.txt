@@ -11,4 +11,5 @@ streamlit
 pandas
 matplotlib
 pyarrow
-fpdf
+fpdf2
+
