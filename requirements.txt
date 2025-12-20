@@ -7,3 +7,7 @@ ta-lib
 tradingview-datafeed
 pyarrow
 openpyxl
+streamlit
+pandas
+matplotlib
+pyarrow
