@@ -4,6 +4,7 @@ import streamlit as st
 import matplotlib.pyplot as plt
 import numpy as np
 from fpdf import FPDF
+from fpdf.enums import XPos, YPos
 
 # =====================================================
 # STREAMLIT CONFIG
@@ -262,17 +263,44 @@ else:
 # =====================================================
 st.header("📄 Weekly Sector Rotation Report")
 
+from fpdf import FPDF
+from fpdf.enums import XPos, YPos
+
 def make_pdf(df):
     pdf = FPDF()
     pdf.add_page()
-    pdf.set_font("Arial", size=10)
-    pdf.cell(0, 8, "Weekly Sector Rotation Report", ln=True, align="C")
-    pdf.ln(4)
-    for _, r in df.sort_values("RS Rank").iterrows():
-        pdf.cell(0, 6, f"{r['Sector']} | 1M {r['1M %']}% | 3M {r['3M %']}% | {r['Rotation']}", ln=True)
-    return pdf.output(dest="S").encode("latin-1")
 
-pdf_bytes = make_pdf(df_rotation)
+    # ✅ Unicode-safe font (supports emojis)
+    pdf.add_font(
+        "DejaVu",
+        "",
+        "fonts/DejaVuSans.ttf",
+        uni=True
+    )
+    pdf.set_font("DejaVu", size=10)
+
+    pdf.cell(
+        0,
+        8,
+        "Weekly Sector Rotation Report",
+        new_x=XPos.LMARGIN,
+        new_y=YPos.NEXT,
+        align="C"
+    )
+
+    pdf.ln(4)
+
+    for _, r in df.sort_values("RS Rank").iterrows():
+        line = (
+            f"{r['Sector']} | "
+            f"1M: {r['1M %']}% | "
+            f"3M: {r['3M %']}% | "
+            f"{r['Rotation']}"
+        )
+        pdf.multi_cell(0, 6, line)
+
+    return pdf.output(dest="S")
+
 
 st.download_button(
     "📥 Download Weekly PDF Report",
