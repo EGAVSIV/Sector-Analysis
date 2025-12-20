@@ -16,7 +16,7 @@ interval_map = {
 }
 
 # === Output Folder ===
-output_dir = "Index_data"
+output_dir = "sectorial_index_data"
 os.makedirs(output_dir, exist_ok=True)
 
 # === Delay for retries ===
@@ -56,8 +56,10 @@ def fetch_and_save_all(symbol):
         print(f"❌ Skipped {symbol} due to missing data.")
 
 # === Symbols List (Partial for testing) ===
-symbols = ['INDIAVIX', 'BANKNIFTY','NIFTY_IND_DIGITAL','NIFTYSMLCAP250','CNXSMALLCAP','NIFTY_MICROCAP250','NIFTYMIDSML400','NIFTYMIDCAP150','CNXMIDCAP','NIFTYSMLCAP50','NIFTY500_MULTICAP','NIFTY_LARGEMID250','CNXFINANCE',
-           'NIFTY_TOTAL_MKT','CNX500', 'CNX200', 'NIFTYFINSRV25_50', 'NIFTY', 'CNX100', 'NIFTYMIDCAP50', 'NIFTY_MID_SELECT', 'CNXCOMMODITIES']
+symbols = ['CNXREALTY','CNXMEDIA','NIFTY_IND_DEFENCE','NIFTY_CAPITAL_MKT','NIFTYPVTBANK','NIFTY_IPO','NIFTY_TOP_10_EW','CNXPSUBANK','NIFTY_NEW_CONSUMP','CNXMETAL','CNXFINANCE',
+           'CNXIT','CNXSERVICE', 'NIFTY_MULTI_INFRA', 'NIFTY_CONSR_DURBL', 'NIFTY', 'NIFTY_COREHOUSING', 'CNXPSE', 'CNXCONSUMPTION', 'CNXINFRA', 'NIFTY_RURAL', 'NIFTY_EV', 'BANKNIFTY',
+           'NIFTY_CORP_MAATR', 'CPSE', 'NIFTY_HOUSING', 'NIFTY_IND_TOURISM', 'CNXENERGY', 'CNXMNC', 'NIFTY_NONCYC_CONS', 'CNXAUTO', 'NIFTY_MOBILITY',
+           'NIFTY_INDIA_MFG', 'NIFTY_MULTI_MFG', 'NIFTY_OIL_AND_GAS', 'NIFTY_MS_IT_TELCM', 'NIFTY_HEALTHCARE', 'CNXFMCG', 'CNXPHARMA']
 
 # === Run for All Symbols ===
 for symbol in symbols:
