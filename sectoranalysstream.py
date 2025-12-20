@@ -308,7 +308,8 @@ def make_pdf(df):
             new_y=YPos.NEXT
         )
 
-    return pdf.output(dest="S")
+    pdf_bytes = pdf.output(dest="S")
+    return bytes(pdf_bytes)
 
 # =====================================================
 # WEEKLY PDF EXPORT
