@@ -11,3 +11,4 @@ streamlit
 pandas
 matplotlib
 pyarrow
+fpdf
