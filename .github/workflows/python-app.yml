@@ -1,17 +1,17 @@
-name: Index Data Fetch (Daily 3:30 PM IST)
+name: Sectoral Index Data Fetch (3:30 PM IST)
 
 on:
-  # ✅ Manual Run Button
+  # ✅ Manual trigger from GitHub UI
   workflow_dispatch:
 
-  # ✅ Scheduled Run (Mon–Fri 3:30 PM IST)
+  # ✅ Auto schedule: Monday–Friday 3:30 PM IST
   schedule:
     - cron: '0 10 * * 1-5'   # 10:00 UTC = 15:30 IST
 
 jobs:
-  fetch-index-data:
+  run-sector-data:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 40
 
     steps:
       - name: Checkout repository
@@ -30,9 +30,11 @@ jobs:
           pip install pandas pyarrow
           pip install git+https://github.com/rongardF/tvdatafeed.git
 
-      - name: Run index data fetch script
-        env:
-          TV_USERNAME: ${{ secrets.TV_USERNAME }}
-          TV_PASSWORD: ${{ secrets.TV_PASSWORD }}
+      - name: Debug – show repo files (first run only)
         run: |
-          python index_fetch.py
+          pwd
+          ls -la
+
+      - name: Run sector data script
+        run: |
+          python sectordata.py
