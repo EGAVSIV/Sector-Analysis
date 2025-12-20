@@ -254,7 +254,7 @@ else:
 # SECTOR → STOCK MAPPING
 # =====================================================
 SECTOR_STOCKS = {
-    "CNXIT": ["TCS", "INFY", "WIPRO"],
+    "CNXIT": ["TCS", "INFY", "WIPRO","HCL","LTIM","TECM","COFORGE","MPHASIS","ORACLE"],
     "CNXAUTO": ["TATAMOTORS", "MARUTI", "M&M"],
     "CNXFINANCE": ["HDFCBANK", "ICICIBANK", "AXISBANK"]
 }
