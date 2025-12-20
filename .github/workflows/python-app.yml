@@ -38,3 +38,11 @@ jobs:
       - name: Run sector data script
         run: |
           python sectordata.py
+      - name: Commit and push generated data
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+
+          git add sectorial_index_data || true
+          git commit -m "Auto update sectorial index data [CI]" || echo "Nothing to commit"
+          git push
