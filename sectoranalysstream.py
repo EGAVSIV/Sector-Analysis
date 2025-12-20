@@ -326,8 +326,12 @@ st.download_button(
 )
 
 
-st.markdown("""
+    st.markdown("""
 ---
-**Designed by Gaurav Singh Yadav**  
-Sector Rotation | Relative Strength | Quant Intelligence  
+**Designed by:-  
+Gaurav Singh Yadav**   
+🩷💛🩵💙🩶💜🤍🤎💖  Built With Love 🫶  
+Energy | Commodity | Quant Intelligence 📶  
+📱 +91-8003994518 〽️   
+📧 yadav.gauravsingh@gmail.com ™️
 """)
