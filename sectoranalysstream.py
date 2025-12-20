@@ -338,7 +338,7 @@ def make_pdf(df):
 # =====================================================
 # WEEKLY PDF EXPORT
 # =====================================================
-st.header("📄 Weekly Sector Rotation Report")
+
 
 pdf_bytes = make_pdf(df_rotation)   # ✅ THIS WAS MISSING
 
