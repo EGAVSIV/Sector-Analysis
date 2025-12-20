@@ -263,14 +263,12 @@ else:
 # =====================================================
 st.header("📄 Weekly Sector Rotation Report")
 
-from fpdf import FPDF
-from fpdf.enums import XPos, YPos
-
 def make_pdf(df):
     pdf = FPDF()
+    pdf.set_auto_page_break(auto=True, margin=15)
     pdf.add_page()
 
-    # ✅ Unicode-safe font (supports emojis)
+    # Unicode-safe font
     pdf.add_font(
         "DejaVu",
         "",
@@ -279,6 +277,7 @@ def make_pdf(df):
     )
     pdf.set_font("DejaVu", size=10)
 
+    # Title
     pdf.cell(
         0,
         8,
@@ -287,8 +286,10 @@ def make_pdf(df):
         new_y=YPos.NEXT,
         align="C"
     )
+    pdf.ln(6)
 
-    pdf.ln(4)
+    # Calculate usable width safely
+    usable_width = pdf.w - pdf.l_margin - pdf.r_margin
 
     for _, r in df.sort_values("RS Rank").iterrows():
         line = (
@@ -297,7 +298,15 @@ def make_pdf(df):
             f"3M: {r['3M %']}% | "
             f"{r['Rotation']}"
         )
-        pdf.multi_cell(0, 6, line)
+
+        # 🔥 CRITICAL FIX: pass usable width explicitly
+        pdf.multi_cell(
+            usable_width,
+            6,
+            line,
+            new_x=XPos.LMARGIN,
+            new_y=YPos.NEXT
+        )
 
     return pdf.output(dest="S")
 
