@@ -3,166 +3,282 @@ import pandas as pd
 import streamlit as st
 import matplotlib.pyplot as plt
 import numpy as np
+from fpdf import FPDF
 
-# ===============================
+# =====================================================
 # STREAMLIT CONFIG
-# ===============================
+# =====================================================
 st.set_page_config(
-    page_title="Sector Performance & Rotation Dashboard",
+    page_title="Sector Rotation & Relative Strength Dashboard",
     layout="wide",
 )
 
-st.title("📊 Sector Performance vs NIFTY")
-st.caption("Relative Strength | Sector Rotation | Multi-Timeframe Analysis")
+st.title("📊 Sector Rotation & Relative Strength Dashboard")
+st.caption("Sector Performance | RRG | Rotation | Portfolio Model")
 
 DATA_FOLDER = "sectorial_index_data"
+STOCK_DATA_FOLDER = "stock_data"
+STATE_FILE = "sector_rotation_state.csv"
 
-# ===============================
+# =====================================================
 # DATA LOADER
-# ===============================
+# =====================================================
 @st.cache_data(show_spinner=False)
-def load_parquet_data(file_path):
-    df = pd.read_parquet(file_path)
-
+def load_parquet_data(path):
+    df = pd.read_parquet(path)
     if isinstance(df.index, pd.MultiIndex):
         df = df.reset_index()
-    elif 'datetime' in df.index.names:
+    elif "datetime" in df.index.names:
         df = df.reset_index()
-
-    df['date'] = pd.to_datetime(df['datetime']).dt.date
+    df["date"] = pd.to_datetime(df["datetime"]).dt.date
     return df.sort_values("date")
 
-# ===============================
-# LAST UPDATED DATE
-# ===============================
-nifty_df_all = load_parquet_data(os.path.join(DATA_FOLDER, "NIFTY.parquet"))
-last_updated = nifty_df_all['date'].iloc[-1]
+# =====================================================
+# BASIC UTILITIES
+# =====================================================
+def calc_return(df, bars):
+    if len(df) < bars:
+        return None
+    return (df["close"].iloc[-1] / df["close"].iloc[-bars] - 1) * 100
 
-st.success(f"🕒 **Data Last Updated:** {last_updated}")
-
-# ===============================
-# BASIC VS NIFTY (KEEP AS IS)
-# ===============================
-def calculate_vs_nifty(folder_path, lookback=30):
-    results = []
-
-    nifty_df = nifty_df_all.tail(lookback)
-    nifty_return = (nifty_df['close'].iloc[-1] / nifty_df['close'].iloc[0] - 1) * 100
-
-    for file in os.listdir(folder_path):
-        if not file.endswith(".parquet") or file == "NIFTY.parquet":
-            continue
-
-        df = load_parquet_data(os.path.join(folder_path, file))
-        if len(df) < lookback:
-            continue
-
-        df = df.tail(lookback)
-        stock_return = (df['close'].iloc[-1] / df['close'].iloc[0] - 1) * 100
-
-        results.append({
-            "Symbol": file.replace(".parquet", ""),
-            "Return %": round(stock_return, 2),
-            "NIFTY %": round(nifty_return, 2),
-            "Status": "Outperforming" if stock_return > nifty_return else "Underperforming"
-        })
-
-    return pd.DataFrame(results).sort_values("Return %", ascending=False)
-
-# ===============================
-# MULTI TIMEFRAME PERFORMANCE
-# ===============================
-def multi_tf_returns(df):
-    periods = {
-        "1W %": 5,
-        "1M %": 21,
-        "3M %": 63,
-        "6M %": 126,
-    }
-    out = {}
-    for k, p in periods.items():
-        if len(df) >= p:
-            out[k] = round((df['close'].iloc[-1] / df['close'].iloc[-p] - 1) * 100, 2)
-        else:
-            out[k] = np.nan
-    return out
-
-# ===============================
-# SECTOR ROTATION LOGIC
-# ===============================
-def classify_rotation(ret_1m, ret_3m):
-    if ret_1m > 0 and ret_3m > 0:
+def classify_rotation(r1m, r3m):
+    if r1m > 0 and r3m > 0:
         return "🟢 Leading"
-    if ret_1m < 0 and ret_3m > 0:
+    if r1m < 0 and r3m > 0:
         return "🟡 Weakening"
-    if ret_1m < 0 and ret_3m < 0:
+    if r1m < 0 and r3m < 0:
         return "🔴 Lagging"
     return "🔵 Improving"
 
-# ===============================
+# =====================================================
+# LOAD NIFTY + LAST UPDATED DATE
+# =====================================================
+nifty_df_all = load_parquet_data(os.path.join(DATA_FOLDER, "NIFTY.parquet"))
+last_updated = nifty_df_all["date"].iloc[-1]
+st.success(f"🕒 Data Last Updated: {last_updated}")
+
+# =====================================================
 # UI CONTROL
-# ===============================
+# =====================================================
 lookback = st.slider("Lookback Sessions (Primary Table)", 10, 60, 30, step=5)
 
-df_result = calculate_vs_nifty(DATA_FOLDER, lookback)
+# =====================================================
+# CORE: SECTOR VS NIFTY (UNCHANGED)
+# =====================================================
+results = []
+nifty_df = nifty_df_all.tail(lookback)
+nifty_ret = calc_return(nifty_df, lookback)
 
-# ===============================
-# EXISTING DISPLAY (UNCHANGED)
-# ===============================
+for f in os.listdir(DATA_FOLDER):
+    if not f.endswith(".parquet") or f == "NIFTY.parquet":
+        continue
+    df = load_parquet_data(os.path.join(DATA_FOLDER, f))
+    r = calc_return(df.tail(lookback), lookback)
+    if r is None:
+        continue
+    results.append({
+        "Symbol": f.replace(".parquet", ""),
+        "Return %": round(r, 2),
+        "NIFTY %": round(nifty_ret, 2),
+        "Status": "Outperforming" if r > nifty_ret else "Underperforming"
+    })
+
+df_result = pd.DataFrame(results).sort_values("Return %", ascending=False)
+
 st.subheader("📋 Performance Table (UNCHANGED)")
 st.dataframe(df_result, use_container_width=True)
 
 st.subheader("📈 Relative Performance Chart (UNCHANGED)")
 fig, ax = plt.subplots(figsize=(14, 7))
-colors = ["green" if r > df_result["NIFTY %"].iloc[0] else "red" for r in df_result["Return %"]]
+colors = ["green" if r > nifty_ret else "red" for r in df_result["Return %"]]
 ax.bar(df_result["Symbol"], df_result["Return %"], color=colors)
-ax.axhline(df_result["NIFTY %"].iloc[0], color="blue", linestyle="--", label="NIFTY")
+ax.axhline(nifty_ret, color="blue", linestyle="--", label="NIFTY")
 plt.xticks(rotation=45, ha="right")
 plt.legend()
 st.pyplot(fig)
 
-# ===============================
-# 🔥 NEW SECTION: SECTOR ROTATION
-# ===============================
-st.markdown("---")
-st.header("🔁 Sector Rotation & Multi-Timeframe Strength")
-
+# =====================================================
+# MULTI-TIMEFRAME + ROTATION TABLE
+# =====================================================
 rotation_rows = []
 
-for file in os.listdir(DATA_FOLDER):
-    if not file.endswith(".parquet") or file == "NIFTY.parquet":
+for f in os.listdir(DATA_FOLDER):
+    if not f.endswith(".parquet") or f == "NIFTY.parquet":
+        continue
+    df = load_parquet_data(os.path.join(DATA_FOLDER, f))
+    r1m = calc_return(df, 21)
+    r3m = calc_return(df, 63)
+    r6m = calc_return(df, 126)
+
+    if r1m is None or r3m is None:
         continue
 
-    df = load_parquet_data(os.path.join(DATA_FOLDER, file))
-    tf = multi_tf_returns(df)
-
-    rotation = classify_rotation(tf["1M %"], tf["3M %"])
-
     rotation_rows.append({
-        "Sector": file.replace(".parquet", ""),
-        **tf,
-        "Rotation": rotation
+        "Sector": f.replace(".parquet", ""),
+        "1M %": round(r1m, 2),
+        "3M %": round(r3m, 2),
+        "6M %": round(r6m, 2) if r6m else np.nan,
+        "Rotation": classify_rotation(r1m, r3m)
     })
 
 df_rotation = pd.DataFrame(rotation_rows)
-
-# RS Rank
 df_rotation["RS Rank"] = df_rotation["1M %"].rank(ascending=False).astype(int)
 
-st.subheader("🧭 Sector Rotation Table (NEW)")
-st.dataframe(
-    df_rotation.sort_values("RS Rank"),
-    use_container_width=True
-)
+st.header("🔁 Sector Rotation & Multi-Timeframe Strength")
+st.dataframe(df_rotation.sort_values("RS Rank"), use_container_width=True)
 
-# ===============================
-# DOWNLOADS
-# ===============================
+# =====================================================
+# RRG STYLE SCATTER
+# =====================================================
+st.header("🧭 RRG-Style Sector Rotation Map")
+rrg_df = df_rotation.copy()
+rrg_df["Momentum"] = rrg_df["1M %"] - rrg_df["3M %"]
+
+fig, ax = plt.subplots(figsize=(10, 8))
+for _, r in rrg_df.iterrows():
+    ax.scatter(r["1M %"], r["Momentum"], s=120)
+    ax.text(r["1M %"], r["Momentum"], r["Sector"], fontsize=9)
+ax.axhline(0, linestyle="--", color="grey")
+ax.axvline(0, linestyle="--", color="grey")
+ax.set_xlabel("Relative Strength (1M %)")
+ax.set_ylabel("Momentum (1M − 3M)")
+st.pyplot(fig)
+
+# =====================================================
+# TOP 5 SECTORS
+# =====================================================
+st.header("🏆 Top 5 Strongest Sectors")
+st.dataframe(df_rotation.sort_values("RS Rank").head(5), use_container_width=True)
+
+# =====================================================
+# ROTATION CHANGE ALERTS
+# =====================================================
+st.header("🚨 Sector Rotation Change Alerts")
+prev_state = {}
+if os.path.exists(STATE_FILE):
+    prev_state = dict(pd.read_csv(STATE_FILE).values)
+
+alerts = []
+for _, r in df_rotation.iterrows():
+    old = prev_state.get(r["Sector"])
+    if old and old != r["Rotation"]:
+        alerts.append(f"{r['Sector']}: {old} → {r['Rotation']}")
+
+df_rotation[["Sector", "Rotation"]].to_csv(STATE_FILE, index=False)
+
+if alerts:
+    for a in alerts:
+        st.warning(a)
+else:
+    st.success("No sector rotation changes.")
+
+# =====================================================
+# STOCK LEVEL RRG (OPTIONAL DATA)
+# =====================================================
+SECTOR_STOCKS = {
+    "CNXIT": ["TCS", "INFY", "WIPRO"],
+    "CNXAUTO": ["TATAMOTORS", "MARUTI", "M&M"],
+    "CNXFINANCE": ["HDFCBANK", "ICICIBANK", "AXISBANK"]
+}
+
+st.header("📈 Stock-Level RRG Inside Sector")
+
+available_sectors = sorted(set(SECTOR_STOCKS) & set(df_rotation["Sector"]))
+if available_sectors:
+    sector_sel = st.selectbox("Select Sector", available_sectors)
+    sector_df = load_parquet_data(os.path.join(DATA_FOLDER, f"{sector_sel}.parquet"))
+    sector_1m = calc_return(sector_df, 21)
+
+    rows = []
+    for stock in SECTOR_STOCKS.get(sector_sel, []):
+        p = os.path.join(STOCK_DATA_FOLDER, f"{stock}.parquet")
+        if not os.path.exists(p):
+            continue
+        sdf = load_parquet_data(p)
+        r1 = calc_return(sdf, 21)
+        r3 = calc_return(sdf, 63)
+        if r1 is None or r3 is None:
+            continue
+        rows.append({
+            "Stock": stock,
+            "RS vs Sector": round(r1 - sector_1m, 2),
+            "Momentum": round(r1 - r3, 2)
+        })
+
+    if rows:
+        df_stock_rrg = pd.DataFrame(rows)
+        fig, ax = plt.subplots(figsize=(8, 6))
+        for _, r in df_stock_rrg.iterrows():
+            ax.scatter(r["RS vs Sector"], r["Momentum"], s=120)
+            ax.text(r["RS vs Sector"], r["Momentum"], r["Stock"], fontsize=9)
+        ax.axhline(0, color="grey", linestyle="--")
+        ax.axvline(0, color="grey", linestyle="--")
+        st.pyplot(fig)
+
+# =====================================================
+# SECTOR WEIGHTED PORTFOLIO MODEL
+# =====================================================
+st.header("🧮 Sector Weight-Adjusted Portfolio Model")
+
+model = df_rotation[df_rotation["Rotation"].isin(["🟢 Leading", "🔵 Improving"])].copy()
+model["Raw Weight"] = model["RS Rank"].max() - model["RS Rank"] + 1
+model["Weight %"] = (model["Raw Weight"] / model["Raw Weight"].sum()) * 100
+
+st.dataframe(model[["Sector", "Rotation", "RS Rank", "Weight %"]], use_container_width=True)
+
+# =====================================================
+# AUTO SECTOR-BASED STOCK SCANNER
+# =====================================================
+st.header("🤖 Auto Sector-Based Stock Scanner")
+
+scanner = []
+for _, r in model.iterrows():
+    sector = r["Sector"]
+    s_df = load_parquet_data(os.path.join(DATA_FOLDER, f"{sector}.parquet"))
+    s_ret = calc_return(s_df, 21)
+
+    for stock in SECTOR_STOCKS.get(sector, []):
+        p = os.path.join(STOCK_DATA_FOLDER, f"{stock}.parquet")
+        if not os.path.exists(p):
+            continue
+        sdf = load_parquet_data(p)
+        sr = calc_return(sdf, 21)
+        if sr and sr > s_ret:
+            scanner.append({
+                "Sector": sector,
+                "Stock": stock,
+                "Stock 1M %": round(sr, 2),
+                "Sector 1M %": round(s_ret, 2),
+                "Signal": "Sector Leader"
+            })
+
+if scanner:
+    st.dataframe(pd.DataFrame(scanner).sort_values("Stock 1M %", ascending=False), use_container_width=True)
+else:
+    st.info("No sector-leading stocks detected.")
+
+# =====================================================
+# WEEKLY PDF EXPORT
+# =====================================================
+st.header("📄 Weekly Sector Rotation Report")
+
+def make_pdf(df):
+    pdf = FPDF()
+    pdf.add_page()
+    pdf.set_font("Arial", size=10)
+    pdf.cell(0, 8, "Weekly Sector Rotation Report", ln=True, align="C")
+    pdf.ln(4)
+    for _, r in df.sort_values("RS Rank").iterrows():
+        pdf.cell(0, 6, f"{r['Sector']} | 1M {r['1M %']}% | 3M {r['3M %']}% | {r['Rotation']}", ln=True)
+    return pdf.output(dest="S").encode("latin-1")
+
+pdf_bytes = make_pdf(df_rotation)
+
 st.download_button(
-    "📥 Download Rotation CSV",
-    df_rotation.to_csv(index=False),
-    "sector_rotation_analysis.csv",
-    "text/csv"
+    "📥 Download Weekly PDF Report",
+    pdf_bytes,
+    "sector_rotation_weekly_report.pdf",
+    "application/pdf"
 )
 
 st.markdown("""
