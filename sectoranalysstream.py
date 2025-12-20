@@ -86,7 +86,7 @@ for f in os.listdir(DATA_FOLDER):
 df_result = pd.DataFrame(results).sort_values("Return %", ascending=False)
 
 st.subheader("📋 Performance Table (UNCHANGED)")
-st.dataframe(df_result, use_container_width=True)
+st.dataframe(df_result, use_container_width="stretch")
 
 st.subheader("📈 Relative Performance Chart (UNCHANGED)")
 fig, ax = plt.subplots(figsize=(14, 7))
@@ -125,7 +125,7 @@ df_rotation = pd.DataFrame(rotation_rows)
 df_rotation["RS Rank"] = df_rotation["1M %"].rank(ascending=False).astype(int)
 
 st.header("🔁 Sector Rotation & Multi-Timeframe Strength")
-st.dataframe(df_rotation.sort_values("RS Rank"), use_container_width=True)
+st.dataframe(df_rotation.sort_values("RS Rank"), use_container_width="stretch")
 
 # =====================================================
 # RRG STYLE SCATTER
@@ -148,7 +148,7 @@ st.pyplot(fig)
 # TOP 5 SECTORS
 # =====================================================
 st.header("🏆 Top 5 Strongest Sectors")
-st.dataframe(df_rotation.sort_values("RS Rank").head(5), use_container_width=True)
+st.dataframe(df_rotation.sort_values("RS Rank").head(5), use_container_width="stretch")
 
 # =====================================================
 # ROTATION CHANGE ALERTS
@@ -224,7 +224,7 @@ model = df_rotation[df_rotation["Rotation"].isin(["🟢 Leading", "🔵 Improvin
 model["Raw Weight"] = model["RS Rank"].max() - model["RS Rank"] + 1
 model["Weight %"] = (model["Raw Weight"] / model["Raw Weight"].sum()) * 100
 
-st.dataframe(model[["Sector", "Rotation", "RS Rank", "Weight %"]], use_container_width=True)
+st.dataframe(model[["Sector", "Rotation", "RS Rank", "Weight %"]], use_container_width="stretch")
 
 # =====================================================
 # AUTO SECTOR-BASED STOCK SCANNER
@@ -253,7 +253,7 @@ for _, r in model.iterrows():
             })
 
 if scanner:
-    st.dataframe(pd.DataFrame(scanner).sort_values("Stock 1M %", ascending=False), use_container_width=True)
+    st.dataframe(pd.DataFrame(scanner).sort_values("Stock 1M %", ascending=False), use_container_width="stretch")
 else:
     st.info("No sector-leading stocks detected.")
 
