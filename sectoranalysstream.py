@@ -295,14 +295,52 @@ if available_sectors:
     if rows:
         df_stock_rrg = pd.DataFrame(rows)
 
-        fig, ax = plt.subplots(figsize=(8, 6))
+        fig, ax = plt.subplots(figsize=(7, 7), dpi=120)
+        ax.scatter(
+            df_stock_rrg["RS vs Sector"],
+            df_stock_rrg["Momentum"],
+            s=90,
+            alpha=0.85,
+            edgecolors="black"
+        )
         for _, r in df_stock_rrg.iterrows():
-            ax.scatter(r["RS vs Sector"], r["Momentum"], s=120)
-            ax.text(r["RS vs Sector"], r["Momentum"], r["Stock"], fontsize=9)
+            ax.annotate(
+                r["Stock"],
+                (r["RS vs Sector"], r["Momentum"]),
+                textcoords="offset points",
+                xytext=(6, 6),
+                fontsize=8,
+                weight="bold"
+            )
 
-        ax.axhline(0, linestyle="--", color="grey")
-        ax.axvline(0, linestyle="--", color="grey")
+        ax.axhline(0, color="black", linestyle="--", linewidth=1)
+        ax.axvline(0, color="black", linestyle="--", linewidth=1)
+        ax.axhspan(0, ax.get_ylim()[1], xmin=0.5, xmax=1, color="#e6ffe6", alpha=0.3)   # Leading
+        ax.axhspan(0, ax.get_ylim()[1], xmin=0, xmax=0.5, color="#e6f0ff", alpha=0.3)   # Improving
+        ax.axhspan(ax.get_ylim()[0], 0, xmin=0, xmax=0.5, color="#fff0e6", alpha=0.3)  # Lagging
+        ax.axhspan(ax.get_ylim()[0], 0, xmin=0.5, xmax=1, color="#fff5f5", alpha=0.3)  # Weakening
+
+        # Dynamic axis limits (tight view)
+        x_pad = max(1, abs(df_stock_rrg["RS vs Sector"]).max() * 0.25)
+        y_pad = max(1, abs(df_stock_rrg["Momentum"]).max() * 0.25)
+
+        ax.set_xlim(
+            df_stock_rrg["RS vs Sector"].min() - x_pad,
+            df_stock_rrg["RS vs Sector"].max() + x_pad
+        )
+        ax.set_ylim(
+            df_stock_rrg["Momentum"].min() - y_pad,
+            df_stock_rrg["Momentum"].max() + y_pad
+        )
+
+        ax.set_xlabel("Relative Strength vs Sector (1M %)", fontsize=10)
+        ax.set_ylabel("Momentum (1M − 3M)", fontsize=10)
+        ax.set_title(f"Stock-Level RRG — {sector_sel}", fontsize=12, weight="bold")
+
+        ax.grid(alpha=0.3)
+
         st.pyplot(fig)
+
 
 # =====================================================
 # SECTOR WEIGHTED PORTFOLIO
