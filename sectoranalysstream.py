@@ -42,21 +42,18 @@ st.title("📊 Sector Rotation & Relative Strength Dashboard")
 st.caption("Sector Performance | RRG | Rotation | Portfolio Model")
 
 DATA_FOLDER = "sectorial_index_data"
-STOCK_DATA_FOLDER = "stock_data"
+STOCK_DATA_FOLDER = ("https://raw.githubusercontent.com/"
+    "EGAVSIV/Stock_Scanner_With_ASTA_Parameters/main/stock_data_D")
 STATE_FILE = "sector_rotation_state.csv"
 
 # =====================================================
 # DATA LOADER
 # =====================================================
 @st.cache_data(show_spinner=False)
-def load_parquet_data(path):
-    df = pd.read_parquet(path)
-    if isinstance(df.index, pd.MultiIndex):
-        df = df.reset_index()
-    elif "datetime" in df.index.names:
-        df = df.reset_index()
-    df["date"] = pd.to_datetime(df["datetime"]).dt.date
-    return df.sort_values("date")
+def load_stock_parquet(symbol):
+    url = f"{STOCK_DATA_FOLDER}/{symbol}.parquet"
+    return pd.read_parquet(url)
+
 
 # =====================================================
 # BASIC UTILITIES
