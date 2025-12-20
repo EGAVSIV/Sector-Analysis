@@ -326,7 +326,7 @@ st.download_button(
 )
 
 
-    st.markdown("""
+st.markdown("""
 ---
 **Designed by:-  
 Gaurav Singh Yadav**   
