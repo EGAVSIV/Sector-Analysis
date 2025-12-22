@@ -62,7 +62,8 @@ with col1:
         st.rerun()
 
 with col2:
-    st.caption(f"🕒 Last refresh: {pd.Timestamp.now()}")
+    ist_time = pd.Timestamp.now(tz="Asia/Kolkata")
+    st.caption(f"🕒 Last refresh (IST): {ist_time.strftime('%Y-%m-%d %H:%M:%S')}")
 
 
 # =====================================================
