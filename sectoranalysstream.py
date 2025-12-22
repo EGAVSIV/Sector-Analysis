@@ -507,4 +507,3 @@ if st.button("🔄 Refresh Data from GitHub"):
     st.cache_data.clear()
     st.success("Cache cleared. Fresh data loaded.")
     st.rerun()
-
