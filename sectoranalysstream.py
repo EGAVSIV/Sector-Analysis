@@ -486,3 +486,9 @@ Energy | Commodity | Quant Intelligence 📶
 📱 +91-8003994518 〽️   
 📧 yadav.gauravsingh@gmail.com ™️
 """)
+
+if st.button("🔄 Refresh Data from GitHub"):
+    st.cache_data.clear()
+    st.success("Cache cleared. Fresh data loaded.")
+    st.rerun()
+
