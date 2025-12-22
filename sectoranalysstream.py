@@ -10,35 +10,9 @@ from fpdf import FPDF
 from fpdf.enums import XPos, YPos
 import hashlib
 
-
-# =====================================================
-# RRG QUADRANT VISUAL HELPER (REUSABLE)
-# =====================================================
-def draw_rrg_quadrants(ax):
-    xlim = ax.get_xlim()
-    ylim = ax.get_ylim()
-
-    # Backgrounds
-    ax.axhspan(0, ylim[1], xmin=0.5, xmax=1, color="#e6ffe6", alpha=0.45)   # Leading
-    ax.axhspan(0, ylim[1], xmin=0, xmax=0.5, color="#e6f0ff", alpha=0.45)   # Improving
-    ax.axhspan(ylim[0], 0, xmin=0, xmax=0.5, color="#fff0e6", alpha=0.45)  # Lagging
-    ax.axhspan(ylim[0], 0, xmin=0.5, xmax=1, color="#fff5cc", alpha=0.45)  # Weakening
-
-    # Labels
-    ax.text(xlim[1]*0.65, ylim[1]*0.85, "LEADING", fontsize=11, weight="bold", color="green")
-    ax.text(xlim[0]*0.75, ylim[1]*0.85, "IMPROVING", fontsize=11, weight="bold", color="blue")
-    ax.text(xlim[0]*0.75, ylim[0]*0.85, "LAGGING", fontsize=11, weight="bold", color="red")
-    ax.text(xlim[1]*0.65, ylim[0]*0.85, "WEAKENING", fontsize=11, weight="bold", color="orange")
-
-    # Axis lines
-    ax.axhline(0, color="black", linestyle="--", linewidth=1)
-    ax.axvline(0, color="black", linestyle="--", linewidth=1)
-
-
 # =====================================================
 # STREAMLIT CONFIG (MUST BE FIRST)
 # =====================================================
-
 st.set_page_config(
     page_title="🧭 NIFTY Sector Rotation & Relative Strength",
     layout="wide",
@@ -263,39 +237,16 @@ st.header("🧭 RRG-Style Sector Map")
 rrg_df = df_rotation.copy()
 rrg_df["Momentum"] = rrg_df["1M %"] - rrg_df["3M %"]
 
-fig, ax = plt.subplots(figsize=(11, 9), dpi=130)
-
-ax.scatter(
-    rrg_df["1M %"],
-    rrg_df["Momentum"],
-    s=180,
-    alpha=0.9,
-    edgecolors="black"
-)
-
+fig, ax = plt.subplots(figsize=(10, 8))
 for _, r in rrg_df.iterrows():
-    ax.annotate(
-        r["Sector"],
-        (r["1M %"], r["Momentum"]),
-        textcoords="offset points",
-        xytext=(6, 6),
-        fontsize=9,
-        weight="bold"
-    )
+    ax.scatter(r["1M %"], r["Momentum"], s=120)
+    ax.text(r["1M %"], r["Momentum"], r["Sector"], fontsize=9)
 
-# Tight limits
-ax.set_xlim(rrg_df["1M %"].min() - 1, rrg_df["1M %"].max() + 1)
-ax.set_ylim(rrg_df["Momentum"].min() - 1, rrg_df["Momentum"].max() + 1)
-
-draw_rrg_quadrants(ax)
-
+ax.axhline(0, linestyle="--", color="grey")
+ax.axvline(0, linestyle="--", color="grey")
 ax.set_xlabel("Relative Strength (1M %)")
 ax.set_ylabel("Momentum (1M − 3M)")
-ax.set_title("Sector RRG — Strength vs Momentum", fontsize=14, weight="bold")
-
-ax.grid(alpha=0.25)
 st.pyplot(fig)
-
 
 # =====================================================
 # TOP 5 SECTORS
@@ -411,13 +362,14 @@ if available_sectors:
 
         ax.axhline(0, color="black", linestyle="--", linewidth=1)
         ax.axvline(0, color="black", linestyle="--", linewidth=1)
-
+        ax.axhspan(0, ax.get_ylim()[1], xmin=0.5, xmax=1, color="#e6ffe6", alpha=0.3)   # Leading
+        ax.axhspan(0, ax.get_ylim()[1], xmin=0, xmax=0.5, color="#e6f0ff", alpha=0.3)   # Improving
+        ax.axhspan(ax.get_ylim()[0], 0, xmin=0, xmax=0.5, color="#fff0e6", alpha=0.3)  # Lagging
+        ax.axhspan(ax.get_ylim()[0], 0, xmin=0.5, xmax=1, color="#fff5f5", alpha=0.3)  # Weakening
 
         # Dynamic axis limits (tight view)
         x_pad = max(1, abs(df_stock_rrg["RS vs Sector"]).max() * 0.25)
         y_pad = max(1, abs(df_stock_rrg["Momentum"]).max() * 0.25)
-        
-
 
         ax.set_xlim(
             df_stock_rrg["RS vs Sector"].min() - x_pad,
@@ -440,8 +392,6 @@ if available_sectors:
         ax.grid(alpha=0.3)
 
         st.pyplot(fig)
-        draw_rrg_quadrants(ax)
-
 
 
 # =====================================================
