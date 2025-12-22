@@ -51,6 +51,21 @@ st.title("📊 Sector Rotation & Relative Strength Dashboard")
 st.caption("Sector Performance | RRG | Rotation | Portfolio | Scanner")
 
 # =====================================================
+# TOP DATA REFRESH CONTROL
+# =====================================================
+col1, col2 = st.columns([1, 5])
+
+with col1:
+    if st.button("🔄 Refresh Data"):
+        st.cache_data.clear()
+        st.success("Fresh data loaded from GitHub.")
+        st.rerun()
+
+with col2:
+    st.caption(f"🕒 Last refresh: {pd.Timestamp.now()}")
+
+
+# =====================================================
 # PATH CONFIG
 # =====================================================
 DATA_FOLDER = "sectorial_index_data"
