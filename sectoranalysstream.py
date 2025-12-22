@@ -416,6 +416,8 @@ if available_sectors:
         # Dynamic axis limits (tight view)
         x_pad = max(1, abs(df_stock_rrg["RS vs Sector"]).max() * 0.25)
         y_pad = max(1, abs(df_stock_rrg["Momentum"]).max() * 0.25)
+        
+
 
         ax.set_xlim(
             df_stock_rrg["RS vs Sector"].min() - x_pad,
@@ -438,6 +440,8 @@ if available_sectors:
         ax.grid(alpha=0.3)
 
         st.pyplot(fig)
+        draw_rrg_quadrants(ax)
+
 
 
 # =====================================================
