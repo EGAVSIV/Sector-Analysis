@@ -62,6 +62,17 @@ STOCK_DATA_REPO = (
 
 STATE_FILE = "sector_rotation_state.csv"
 
+def get_last_available_date_for_stocks(stock_list):
+    dates = []
+
+    for s in stock_list:
+        df = load_stock_parquet(s)
+        if df is not None and "date" in df.columns:
+            dates.append(df["date"].iloc[-1])
+
+    return max(dates) if dates else None
+
+
 # =====================================================
 # DATA LOADERS
 # =====================================================
@@ -290,6 +301,9 @@ if available_sectors:
         os.path.join(DATA_FOLDER, f"{sector_sel}.parquet")
     )
     sector_1m = calc_return(sector_df, 21)
+    rrg_date = get_last_available_date_for_stocks(
+        SECTOR_STOCKS.get(sector_sel, [])
+)
 
     rows = []
     for stock in SECTOR_STOCKS.get(sector_sel, []):
@@ -352,7 +366,12 @@ if available_sectors:
 
         ax.set_xlabel("Relative Strength vs Sector (1M %)", fontsize=10)
         ax.set_ylabel("Momentum (1M − 3M)", fontsize=10)
-        ax.set_title(f"Stock-Level RRG — {sector_sel}", fontsize=12, weight="bold")
+        title_date = f" | Data as of {rrg_date}" if rrg_date else ""
+        ax.set_title(
+            f"Stock-Level RRG — {sector_sel}{title_date}",
+            fontsize=12,
+            weight="bold"
+        )
 
         ax.grid(alpha=0.3)
 
