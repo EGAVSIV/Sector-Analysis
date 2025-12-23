@@ -362,10 +362,10 @@ if available_sectors:
 
         ax.axhline(0, color="black", linestyle="--", linewidth=1)
         ax.axvline(0, color="black", linestyle="--", linewidth=1)
-        ax.axhspan(0, ax.get_ylim()[1], xmin=0.5, xmax=1, color="#e6ffe6", alpha=0.3)   # Leading
-        ax.axhspan(0, ax.get_ylim()[1], xmin=0, xmax=0.5, color="#e6f0ff", alpha=0.3)   # Improving
-        ax.axhspan(ax.get_ylim()[0], 0, xmin=0, xmax=0.5, color="#fff0e6", alpha=0.3)  # Lagging
-        ax.axhspan(ax.get_ylim()[0], 0, xmin=0.5, xmax=1, color="#fff5f5", alpha=0.3)  # Weakening
+        ax.axhspan(0, ax.get_ylim()[1], xmin=0.5, xmax=1, color="#e6ffe6", alpha=0.6)   # Leading
+        ax.axhspan(0, ax.get_ylim()[1], xmin=0, xmax=0.5, color="#e6f0ff", alpha=0.6)   # Improving
+        ax.axhspan(ax.get_ylim()[0], 0, xmin=0, xmax=0.5, color="#fff0e6", alpha=0.6)  # Lagging
+        ax.axhspan(ax.get_ylim()[0], 0, xmin=0.5, xmax=1, color="#fff5f5", alpha=0.6)  # Weakening
 
         # Dynamic axis limits (tight view)
         x_pad = max(1, abs(df_stock_rrg["RS vs Sector"]).max() * 0.25)
