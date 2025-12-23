@@ -240,7 +240,7 @@ rrg_df["Momentum"] = rrg_df["1M %"] - rrg_df["3M %"]
 fig, ax = plt.subplots(figsize=(10, 8))
 for _, r in rrg_df.iterrows():
     ax.scatter(r["1M %"], r["Momentum"], s=120)
-    ax.text(r["1M %"], r["Momentum"], r["Sector"], fontsize=6)
+    ax.text(r["1M %"], r["Momentum"], r["Sector"], fontsize=5)
 
 ax.axhline(0, linestyle="--", color="grey")
 ax.axvline(0, linestyle="--", color="grey")
