@@ -376,7 +376,7 @@ if available_sectors:
         )
 
         ax.text(
-            0.15, 0.75, "IMPROVING",
+            0.15, 0.95, "IMPROVING",
             transform=ax.transAxes,
             fontsize=11, fontweight="bold",
             color="royalblue", alpha=0.7,
