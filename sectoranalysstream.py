@@ -362,7 +362,7 @@ if available_sectors:
 
         ax.axhline(0, color="black", linestyle="--", linewidth=1)
         ax.axvline(0, color="black", linestyle="--", linewidth=1)
-        ax.axhspan(0, ax.get_ylim()[1], xmin=0.5, xmax=1, color="#e6ffe6", alpha=0.9)   # Leading
+        ax.axhspan(0, ax.get_ylim()[1], xmin=0.5, xmax=1, color="#95c49c", alpha=0.9)   # Leading
         ax.axhspan(0, ax.get_ylim()[1], xmin=0, xmax=0.5, color="#e6f0ff", alpha=0.9)   # Improving
         ax.axhspan(ax.get_ylim()[0], 0, xmin=0, xmax=0.5, color="#fff0e6", alpha=0.9)  # Lagging
         ax.axhspan(ax.get_ylim()[0], 0, xmin=0.5, xmax=1, color="#fff5f5", alpha=0.9)  # Weakening
