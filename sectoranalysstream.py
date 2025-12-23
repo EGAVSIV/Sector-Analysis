@@ -387,7 +387,7 @@ if available_sectors:
             0.15, 0.05, "LAGGING",
             transform=ax.transAxes,
             fontsize=11, fontweight="bold",
-            color="darkorange", alpha=0.7,
+            color="crimson", alpha=0.7,
             ha="center", va="center"
         )
 
@@ -395,7 +395,7 @@ if available_sectors:
             0.80, 0.05, "WEAKENING",
             transform=ax.transAxes,
             fontsize=11, fontweight="bold",
-            color="crimson", alpha=0.7,
+            color="darkorange", alpha=0.7,
             ha="center", va="center"
         )
 
