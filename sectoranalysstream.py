@@ -368,7 +368,7 @@ if available_sectors:
         ax.axhspan(ax.get_ylim()[0], 0, xmin=0.5, xmax=1, color="#e2c97c", alpha=0.9)  # Weakening
 
         ax.text(
-            0.75, 0.75, "LEADING",
+            0.95, 0.95, "LEADING",
             transform=ax.transAxes,
             fontsize=11, fontweight="bold",
             color="green", alpha=0.7,
