@@ -357,7 +357,7 @@ if available_sectors:
                 (r["RS vs Sector"], r["Momentum"]),
                 textcoords="offset points",
                 xytext=(6, 6),
-                fontsize=6,
+                fontsize=4,
                 weight="bold"
             )
 
