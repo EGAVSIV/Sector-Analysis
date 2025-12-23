@@ -367,6 +367,14 @@ if available_sectors:
         ax.axhspan(ax.get_ylim()[0], 0, xmin=0, xmax=0.5, color="#d77979", alpha=0.9)  # Lagging
         ax.axhspan(ax.get_ylim()[0], 0, xmin=0.5, xmax=1, color="#e2c97c", alpha=0.9)  # Weakening
 
+        ax.text(
+            0.75, 0.75, "LEADING",
+            transform=ax.transAxes,
+            fontsize=11, fontweight="bold",
+            color="green", alpha=0.7,
+            ha="center", va="center"
+        )
+
         # Dynamic axis limits (tight view)
         x_pad = max(1, abs(df_stock_rrg["RS vs Sector"]).max() * 0.25)
         y_pad = max(1, abs(df_stock_rrg["Momentum"]).max() * 0.25)
