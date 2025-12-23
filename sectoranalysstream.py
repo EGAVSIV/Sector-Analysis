@@ -375,6 +375,14 @@ if available_sectors:
             ha="center", va="center"
         )
 
+        ax.text(
+            0.15, 0.75, "IMPROVING",
+            transform=ax.transAxes,
+            fontsize=11, fontweight="bold",
+            color="royalblue", alpha=0.7,
+            ha="center", va="center"
+        )
+
         # Dynamic axis limits (tight view)
         x_pad = max(1, abs(df_stock_rrg["RS vs Sector"]).max() * 0.25)
         y_pad = max(1, abs(df_stock_rrg["Momentum"]).max() * 0.25)
