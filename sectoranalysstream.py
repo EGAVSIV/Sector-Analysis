@@ -14,7 +14,7 @@ import hashlib
 # STREAMLIT CONFIG (MUST BE FIRST)
 # =====================================================
 st.set_page_config(
-    page_title="🧭 NIFTY Sector Rotation & Relative Strength",
+    page_title="Sector Rotation & Relative Strength",
     layout="wide",page_icon="♻️"
 )
 
