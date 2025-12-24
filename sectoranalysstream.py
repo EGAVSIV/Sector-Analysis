@@ -15,7 +15,7 @@ import hashlib
 # =====================================================
 st.set_page_config(
     page_title="🧭 NIFTY Sector Rotation & Relative Strength",
-    layout="wide",
+    layout="wide",page_icon="♻️"
 )
 
 # =====================================================
