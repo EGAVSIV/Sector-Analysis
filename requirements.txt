@@ -12,3 +12,4 @@ pandas
 matplotlib
 pyarrow
 fpdf2
+altair<5
