@@ -7,7 +7,7 @@ ta-lib
 tradingview-datafeed
 pyarrow
 openpyxl
-streamlit
+streamlit==1.31.1
 pandas
 matplotlib
 pyarrow
