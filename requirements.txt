@@ -11,8 +11,9 @@ requests
 pyarrow
 openpyxl
 
+ta-lib
 # --- Trading ---
-ta-lib==0.4.28
+#ta-lib==0.4.28
 tradingview-datafeed
 
 # --- PDF ---
