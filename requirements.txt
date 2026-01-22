@@ -12,4 +12,5 @@ pandas
 matplotlib
 pyarrow
 fpdf2
+altair.vegalite.v4
 
