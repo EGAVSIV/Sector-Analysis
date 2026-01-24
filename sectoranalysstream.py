@@ -193,7 +193,7 @@ for f in os.listdir(DATA_FOLDER):
 df_result = pd.DataFrame(results).sort_values("Return %", ascending=False)
 
 st.subheader("📋 Performance Table")
-st.dataframe(df_result, width="stretch")
+st.dataframe(df_result)
 
 st.subheader("📈 Relative Performance Chart")
 fig, ax = plt.subplots(figsize=(14, 7))
@@ -233,7 +233,7 @@ df_rotation = pd.DataFrame(rotation_rows)
 df_rotation["RS Rank"] = df_rotation["1M %"].rank(ascending=False).astype(int)
 
 st.header("🔁 Sector Rotation Table")
-st.dataframe(df_rotation.sort_values("RS Rank"), width="stretch")
+st.dataframe(df_rotation.sort_values("RS Rank"))
 
 # =====================================================
 # RRG STYLE SCATTER
@@ -474,7 +474,7 @@ for _, r in model.iterrows():
             })
 
 if scanner:
-    st.dataframe(pd.DataFrame(scanner), width="stretch")
+    st.dataframe(pd.DataFrame(scanner))
 else:
     st.info("No sector-leading stocks detected.")
 
