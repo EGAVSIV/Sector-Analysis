@@ -258,7 +258,7 @@ st.pyplot(fig)
 # TOP 5 SECTORS
 # =====================================================
 st.header("🏆 Top 5 Strongest Sectors")
-st.dataframe(df_rotation.sort_values("RS Rank").head(5), width="stretch")
+st.dataframe(df_rotation.sort_values("RS Rank").head(5))
 
 # =====================================================
 # ROTATION CHANGE ALERTS
