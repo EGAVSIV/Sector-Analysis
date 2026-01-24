@@ -443,9 +443,7 @@ model["Raw Weight"] = model["RS Rank"].max() - model["RS Rank"] + 1
 model["Weight %"] = (model["Raw Weight"] / model["Raw Weight"].sum()) * 100
 
 st.dataframe(
-    model[["Sector", "Rotation", "RS Rank", "Weight %"]],
-    width="stretch"
-)
+    model[["Sector", "Rotation", "RS Rank", "Weight %"]]
 
 # =====================================================
 # AUTO SECTOR-BASED STOCK SCANNER
