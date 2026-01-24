@@ -1,20 +1,14 @@
-# --- Core ---
-streamlit==1.22.0
-altair==4.2.2
-
-# --- Data ---
 numpy
 pandas
 scipy
 matplotlib
 requests
+ta-lib
+tradingview-datafeed
 pyarrow
 openpyxl
-
-ta-lib
-# --- Trading ---
-#ta-lib==0.4.28
-tradingview-datafeed
-
-# --- PDF ---
-fpdf2
+streamlit==1.31.1
+pandas
+matplotlib
+pyarrow
+altair==4.2.2
