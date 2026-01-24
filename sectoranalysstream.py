@@ -444,6 +444,8 @@ model["Weight %"] = (model["Raw Weight"] / model["Raw Weight"].sum()) * 100
 
 st.dataframe(
     model[["Sector", "Rotation", "RS Rank", "Weight %"]]
+)
+
 
 # =====================================================
 # AUTO SECTOR-BASED STOCK SCANNER
