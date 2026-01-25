@@ -272,19 +272,80 @@ st.dataframe(df_rotation.sort_values("RS Rank"))
 # =====================================================
 st.header("🧭 RRG-Style Sector Map")
 
+# =====================================================
+# SECTOR RRG DATA (NIFTY RELATIVE)
+# =====================================================
 rrg_df = df_rotation.copy()
+
+rrg_df["RS vs NIFTY"] = rrg_df["1M %"] - nifty_ret
 rrg_df["Momentum"] = rrg_df["1M %"] - rrg_df["3M %"]
 
-fig, ax = plt.subplots(figsize=(10, 8))
-for _, r in rrg_df.iterrows():
-    ax.scatter(r["1M %"], r["Momentum"], s=120)
-    ax.text(r["1M %"], r["Momentum"], r["Sector"], fontsize=3)
 
-ax.axhline(0, linestyle="--", color="grey")
-ax.axvline(0, linestyle="--", color="grey")
-ax.set_xlabel("Relative Strength (1M %)")
-ax.set_ylabel("Momentum (1M − 3M)")
+st.header("🧭 RRG-Style Sector Map (vs NIFTY)")
+
+fig, ax = plt.subplots(figsize=(7, 7), dpi=120)
+
+ax.scatter(
+    rrg_df["RS vs NIFTY"],
+    rrg_df["Momentum"],
+    s=120,
+    alpha=0.9,
+    edgecolors="black"
+)
+
+for _, r in rrg_df.iterrows():
+    ax.annotate(
+        r["Sector"],
+        (r["RS vs NIFTY"], r["Momentum"]),
+        textcoords="offset points",
+        xytext=(6, 6),
+        fontsize=7,
+        weight="bold"
+    )
+
+# --- Quadrant Lines ---
+ax.axhline(0, color="black", linestyle="--", linewidth=1)
+ax.axvline(0, color="black", linestyle="--", linewidth=1)
+
+# --- Quadrant Backgrounds ---
+ax.axhspan(0, ax.get_ylim()[1], xmin=0.5, xmax=1, color="#95c49c", alpha=0.9)   # Leading
+ax.axhspan(0, ax.get_ylim()[1], xmin=0, xmax=0.5, color="#737f73", alpha=0.9)   # Improving
+ax.axhspan(ax.get_ylim()[0], 0, xmin=0, xmax=0.5, color="#d77979", alpha=0.9)  # Lagging
+ax.axhspan(ax.get_ylim()[0], 0, xmin=0.5, xmax=1, color="#e2c97c", alpha=0.9)  # Weakening
+
+# --- Labels ---
+ax.text(0.80, 0.95, "LEADING", transform=ax.transAxes,
+        fontsize=11, fontweight="bold", color="green", ha="center")
+
+ax.text(0.15, 0.95, "IMPROVING", transform=ax.transAxes,
+        fontsize=11, fontweight="bold", color="royalblue", ha="center")
+
+ax.text(0.15, 0.05, "LAGGING", transform=ax.transAxes,
+        fontsize=11, fontweight="bold", color="crimson", ha="center")
+
+ax.text(0.80, 0.05, "WEAKENING", transform=ax.transAxes,
+        fontsize=11, fontweight="bold", color="darkorange", ha="center")
+
+# --- Dynamic Limits ---
+x_pad = max(1, abs(rrg_df["RS vs NIFTY"]).max() * 0.25)
+y_pad = max(1, abs(rrg_df["Momentum"]).max() * 0.25)
+
+ax.set_xlim(
+    rrg_df["RS vs NIFTY"].min() - x_pad,
+    rrg_df["RS vs NIFTY"].max() + x_pad
+)
+ax.set_ylim(
+    rrg_df["Momentum"].min() - y_pad,
+    rrg_df["Momentum"].max() + y_pad
+)
+
+ax.set_xlabel("Relative Strength vs NIFTY (1M %)", fontsize=10)
+ax.set_ylabel("Momentum (1M − 3M)", fontsize=10)
+ax.set_title(f"Sector RRG — Data as of {analysis_date}", fontsize=12, weight="bold")
+
+ax.grid(alpha=0.3)
 st.pyplot(fig)
+
 
 # =====================================================
 # TOP 5 SECTORS
