@@ -298,8 +298,8 @@ for _, r in rrg_df.iterrows():
         r["Sector"],
         (r["RS vs NIFTY"], r["Momentum"]),
         textcoords="offset points",
-        xytext=(4, 4),
-        fontsize=3,
+        xytext=(3, 3),
+        fontsize=2,
         weight="bold"
     )
 
