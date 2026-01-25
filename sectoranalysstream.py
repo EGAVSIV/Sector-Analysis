@@ -136,10 +136,19 @@ def load_stock_parquet(symbol):
 # =====================================================
 # UTILITIES
 # =====================================================
-def calc_return(df, bars):
-    if df is None or len(df) < bars:
+def calc_return_on_date(df, bars, anchor_date):
+    if df is None or df.empty:
         return None
-    return (df["close"].iloc[-1] / df["close"].iloc[-bars] - 1) * 100
+
+    df = df[df["date"] <= anchor_date]
+    if len(df) < bars + 1:
+        return None
+
+    end_price = df["close"].iloc[-1]
+    start_price = df["close"].iloc[-(bars + 1)]
+
+    return (end_price / start_price - 1) * 100
+
 
 
 def classify_rotation(r1m, r3m):
@@ -163,6 +172,22 @@ last_updated = nifty_df_all["date"].iloc[-1]
 st.success(f"🕒 Data Last Updated: {last_updated}")
 
 # =====================================================
+# BACKTEST DATE SELECTION
+# =====================================================
+min_date = nifty_df_all["date"].min()
+max_date = nifty_df_all["date"].max()
+
+analysis_date = st.date_input(
+    "📅 Select Analysis Date (Backtest)",
+    value=max_date,
+    min_value=min_date,
+    max_value=max_date
+)
+
+st.info(f"📌 All calculations are anchored to: {analysis_date}")
+
+
+# =====================================================
 # UI CONTROL
 # =====================================================
 lookback = st.slider("Lookback Sessions", 10, 60, 30, step=5)
@@ -171,7 +196,8 @@ lookback = st.slider("Lookback Sessions", 10, 60, 30, step=5)
 # SECTOR VS NIFTY (UNCHANGED LOGIC)
 # =====================================================
 results = []
-nifty_ret = calc_return(nifty_df_all.tail(lookback), lookback)
+nifty_ret = calc_return_on_date(nifty_df_all, lookback, analysis_date)
+
 
 for f in os.listdir(DATA_FOLDER):
     if not f.endswith(".parquet") or f == "NIFTY.parquet":
@@ -214,9 +240,9 @@ for f in os.listdir(DATA_FOLDER):
         continue
 
     df = load_sector_parquet(os.path.join(DATA_FOLDER, f))
-    r1m = calc_return(df, 21)
-    r3m = calc_return(df, 63)
-    r6m = calc_return(df, 126)
+    r1m = calc_return_on_date(df, 21, analysis_date)
+    r3m = calc_return_on_date(df, 63, analysis_date)
+    r6m = calc_return_on_date(df, 126, analysis_date)
 
     if r1m is None or r3m is None:
         continue
@@ -323,7 +349,7 @@ if available_sectors:
     sector_df = load_sector_parquet(
         os.path.join(DATA_FOLDER, f"{sector_sel}.parquet")
     )
-    sector_1m = calc_return(sector_df, 21)
+    sector_1m = calc_return_on_date(sector_df, 21, analysis_date)
     rrg_date = get_last_available_date_for_stocks(
         SECTOR_STOCKS.get(sector_sel, [])
 )
@@ -334,8 +360,8 @@ if available_sectors:
         if sdf is None:
             continue
 
-        r1 = calc_return(sdf, 21)
-        r3 = calc_return(sdf, 63)
+        r1 = calc_return_on_date(sdf, 21, analysis_date)
+        r3 = calc_return_on_date(sdf, 63, analysis_date)
 
         if r1 is None or r3 is None:
             continue
@@ -456,14 +482,14 @@ scanner = []
 for _, r in model.iterrows():
     sector = r["Sector"]
     s_df = load_sector_parquet(os.path.join(DATA_FOLDER, f"{sector}.parquet"))
-    s_ret = calc_return(s_df, 21)
+    s_ret = calc_return_on_date(s_df, 21, analysis_date)
 
     for stock in SECTOR_STOCKS.get(sector, []):
         sdf = load_stock_parquet(stock)
         if sdf is None:
             continue
 
-        sr = calc_return(sdf, 21)
+        sr = calc_return_on_date(sdf, 21, analysis_date)
         if sr and sr > s_ret:
             scanner.append({
                 "Sector": sector,
