@@ -84,15 +84,20 @@ STOCK_DATA_REPO = (
 
 STATE_FILE = "sector_rotation_state.csv"
 
-def get_last_available_date_for_stocks(stock_list):
+def get_last_available_date_for_stocks(stock_list, anchor_date):
     dates = []
 
     for s in stock_list:
         df = load_stock_parquet(s)
-        if df is not None and "date" in df.columns:
+        if df is None:
+            continue
+
+        df = df[df["date"] <= anchor_date]
+        if not df.empty:
             dates.append(df["date"].iloc[-1])
 
     return max(dates) if dates else None
+
 
 
 # =====================================================
@@ -204,7 +209,8 @@ for f in os.listdir(DATA_FOLDER):
         continue
 
     df = load_sector_parquet(os.path.join(DATA_FOLDER, f))
-    r = calc_return(df.tail(lookback), lookback)
+    r = calc_return_on_date(df, lookback, analysis_date)
+
 
     if r is None:
         continue
@@ -351,7 +357,8 @@ if available_sectors:
     )
     sector_1m = calc_return_on_date(sector_df, 21, analysis_date)
     rrg_date = get_last_available_date_for_stocks(
-        SECTOR_STOCKS.get(sector_sel, [])
+        SECTOR_STOCKS.get(sector_sel, []),
+        analysis_date
 )
 
     rows = []
