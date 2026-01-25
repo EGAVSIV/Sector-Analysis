@@ -450,7 +450,7 @@ st.dataframe(
 # =====================================================
 # AUTO SECTOR-BASED STOCK SCANNER
 # =====================================================
-st.header("🤖 Auto Sector-Based Stock Scanner")
+st.header("🤖 Sector-Based Top Stock Scanner")
 
 scanner = []
 for _, r in model.iterrows():
