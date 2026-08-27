@@ -49,17 +49,30 @@ def fetch_and_save_all(symbol):
 
     if len(symbol_data) == len(interval_map):  # All timeframes received
         df_all = pd.concat(symbol_data.values(), keys=symbol_data.keys(), names=['Timeframe'])
-        filepath = os.path.join(output_dir, f"{symbol}.parquet")
-        df_all.to_parquet(filepath)
+        
+        # Reset the index so time and timeframe become standard JSON fields
+        df_reset = df_all.reset_index()
+        
+        filepath = os.path.join(output_dir, f"{symbol}.json")
+        
+        # Export to JSON format
+        df_reset.to_json(filepath, orient='records', date_format='iso', indent=4)
         print(f"✅ Saved: {symbol}")
     else:
         print(f"❌ Skipped {symbol} due to missing data.")
 
-# === Symbols List (Partial for testing) ===
-symbols = ['CNXREALTY','CNXMEDIA','NIFTY_IND_DEFENCE','NIFTY_CAPITAL_MKT','NIFTYPVTBANK','NIFTY_IPO','NIFTY_TOP_10_EW','CNXPSUBANK','NIFTY_NEW_CONSUMP','CNXMETAL','CNXFINANCE',
-           'CNXIT','CNXSERVICE', 'NIFTY_MULTI_INFRA', 'NIFTY_CONSR_DURBL', 'NIFTY', 'NIFTY_COREHOUSING', 'CNXPSE', 'CNXCONSUMPTION', 'CNXINFRA', 'NIFTY_RURAL', 'NIFTY_EV', 'BANKNIFTY',
-           'NIFTY_CORP_MAATR', 'CPSE', 'NIFTY_HOUSING', 'NIFTY_IND_TOURISM', 'CNXENERGY', 'CNXMNC', 'NIFTY_NONCYC_CONS', 'CNXAUTO', 'NIFTY_MOBILITY',
-           'NIFTY_INDIA_MFG', 'NIFTY_MULTI_MFG', 'NIFTY_OIL_AND_GAS', 'NIFTY_MS_IT_TELCM', 'NIFTY_HEALTHCARE', 'CNXFMCG', 'CNXPHARMA']
+# === Symbols List ===
+symbols = [
+    'CNXREALTY','CNXMEDIA','NIFTY_IND_DEFENCE','NIFTY_CAPITAL_MKT','NIFTYPVTBANK',
+    'NIFTY_IPO','NIFTY_TOP_10_EW','CNXPSUBANK','NIFTY_NEW_CONSUMP','CNXMETAL',
+    'CNXFINANCE','CNXIT','CNXSERVICE', 'NIFTY_MULTI_INFRA', 'NIFTY_CONSR_DURBL', 
+    'NIFTY', 'NIFTY_COREHOUSING', 'CNXPSE', 'CNXCONSUMPTION', 'CNXINFRA', 
+    'NIFTY_RURAL', 'NIFTY_EV', 'BANKNIFTY', 'NIFTY_CORP_MAATR', 'CPSE', 
+    'NIFTY_HOUSING', 'NIFTY_IND_TOURISM', 'CNXENERGY', 'CNXMNC', 
+    'NIFTY_NONCYC_CONS', 'CNXAUTO', 'NIFTY_MOBILITY', 'NIFTY_INDIA_MFG', 
+    'NIFTY_MULTI_MFG', 'NIFTY_OIL_AND_GAS', 'NIFTY_MS_IT_TELCM', 
+    'NIFTY_HEALTHCARE', 'CNXFMCG', 'CNXPHARMA'
+]
 
 # === Run for All Symbols ===
 for symbol in symbols:
