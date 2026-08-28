@@ -4895,6 +4895,17 @@
         "timeframe":"D"
     },
     {
+        "Timeframe":"D",
+        "datetime":"2026-08-28T03:45:00.000",
+        "symbol":"NSE:NIFTY_CAPITAL_MKT",
+        "open":5461.85,
+        "high":5509.1,
+        "low":5438.55,
+        "close":5507.85,
+        "volume":0.0,
+        "timeframe":"D"
+    },
+    {
         "Timeframe":"W",
         "datetime":"2024-11-11T03:45:00.000",
         "symbol":"NSE:NIFTY_CAPITAL_MKT",
@@ -5924,7 +5935,7 @@
         "open":5435.75,
         "high":5552.0,
         "low":5429.3,
-        "close":5465.15,
+        "close":5507.85,
         "volume":0.0,
         "timeframe":"W"
     },
@@ -6166,7 +6177,7 @@
         "open":5346.4,
         "high":5552.0,
         "low":5170.1,
-        "close":5465.15,
+        "close":5507.85,
         "volume":0.0,
         "timeframe":"M"
     }
