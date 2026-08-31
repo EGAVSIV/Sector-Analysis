@@ -4653,6 +4653,17 @@
         "timeframe":"D"
     },
     {
+        "Timeframe":"D",
+        "datetime":"2026-08-31T03:45:00.000",
+        "symbol":"NSE:NIFTY_CORP_MAATR",
+        "open":39182.0,
+        "high":39190.45,
+        "low":38542.8,
+        "close":38546.85,
+        "volume":0.0,
+        "timeframe":"D"
+    },
+    {
         "Timeframe":"W",
         "datetime":"2024-12-16T03:45:00.000",
         "symbol":"NSE:NIFTY_CORP_MAATR",
@@ -5632,6 +5643,17 @@
         "timeframe":"W"
     },
     {
+        "Timeframe":"W",
+        "datetime":"2026-08-31T03:45:00.000",
+        "symbol":"NSE:NIFTY_CORP_MAATR",
+        "open":39182.0,
+        "high":39190.45,
+        "low":38542.8,
+        "close":38546.85,
+        "volume":0.0,
+        "timeframe":"W"
+    },
+    {
         "Timeframe":"M",
         "datetime":"2024-12-02T03:45:00.000",
         "symbol":"NSE:NIFTY_CORP_MAATR",
@@ -5857,8 +5879,8 @@
         "symbol":"NSE:NIFTY_CORP_MAATR",
         "open":39701.75,
         "high":40288.8,
-        "low":39049.1,
-        "close":39284.9,
+        "low":38542.8,
+        "close":38546.85,
         "volume":0.0,
         "timeframe":"M"
     }

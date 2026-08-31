@@ -4653,6 +4653,17 @@
         "timeframe":"D"
     },
     {
+        "Timeframe":"D",
+        "datetime":"2026-08-31T03:45:00.000",
+        "symbol":"NSE:NIFTY_MS_IT_TELCM",
+        "open":10410.4,
+        "high":10412.85,
+        "low":10245.6,
+        "close":10314.0,
+        "volume":0.0,
+        "timeframe":"D"
+    },
+    {
         "Timeframe":"W",
         "datetime":"2024-12-16T03:45:00.000",
         "symbol":"NSE:NIFTY_MS_IT_TELCM",
@@ -5632,6 +5643,17 @@
         "timeframe":"W"
     },
     {
+        "Timeframe":"W",
+        "datetime":"2026-08-31T03:45:00.000",
+        "symbol":"NSE:NIFTY_MS_IT_TELCM",
+        "open":10410.4,
+        "high":10412.85,
+        "low":10245.6,
+        "close":10314.0,
+        "volume":0.0,
+        "timeframe":"W"
+    },
+    {
         "Timeframe":"M",
         "datetime":"2024-12-02T03:45:00.000",
         "symbol":"NSE:NIFTY_MS_IT_TELCM",
@@ -5858,7 +5880,7 @@
         "open":9735.95,
         "high":10414.7,
         "low":9659.65,
-        "close":10405.25,
+        "close":10314.0,
         "volume":0.0,
         "timeframe":"M"
     }
