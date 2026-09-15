@@ -6644,6 +6644,17 @@
         "timeframe":"D"
     },
     {
+        "Timeframe":"D",
+        "datetime":"2026-09-15T03:45:00.000",
+        "symbol":"NSE:NIFTY_MULTI_INFRA",
+        "open":14311.7,
+        "high":14321.15,
+        "low":13954.45,
+        "close":13960.0,
+        "volume":0.0,
+        "timeframe":"D"
+    },
+    {
         "Timeframe":"W",
         "datetime":"2024-04-08T03:45:00.000",
         "symbol":"NSE:NIFTY_MULTI_INFRA",
@@ -8041,6 +8052,17 @@
         "timeframe":"W"
     },
     {
+        "Timeframe":"W",
+        "datetime":"2026-09-15T03:45:00.000",
+        "symbol":"NSE:NIFTY_MULTI_INFRA",
+        "open":14311.7,
+        "high":14321.15,
+        "low":13954.45,
+        "close":13960.0,
+        "volume":0.0,
+        "timeframe":"W"
+    },
+    {
         "Timeframe":"M",
         "datetime":"2024-04-01T03:45:00.000",
         "symbol":"NSE:NIFTY_MULTI_INFRA",
@@ -8365,8 +8387,8 @@
         "symbol":"NSE:NIFTY_MULTI_INFRA",
         "open":14482.25,
         "high":14535.2,
-        "low":14172.25,
-        "close":14261.9,
+        "low":13954.45,
+        "close":13960.0,
         "volume":0.0,
         "timeframe":"M"
     }
