@@ -6666,6 +6666,17 @@
         "timeframe":"D"
     },
     {
+        "Timeframe":"D",
+        "datetime":"2026-09-17T03:45:00.000",
+        "symbol":"NSE:NIFTY_MULTI_MFG",
+        "open":16164.5,
+        "high":16394.2,
+        "low":16164.0,
+        "close":16368.4,
+        "volume":0.0,
+        "timeframe":"D"
+    },
+    {
         "Timeframe":"W",
         "datetime":"2024-04-08T03:45:00.000",
         "symbol":"NSE:NIFTY_MULTI_MFG",
@@ -8069,7 +8080,7 @@
         "open":16564.2,
         "high":16577.45,
         "low":16006.15,
-        "close":16168.3,
+        "close":16368.4,
         "volume":0.0,
         "timeframe":"W"
     },
@@ -8399,7 +8410,7 @@
         "open":17037.55,
         "high":17053.65,
         "low":16006.15,
-        "close":16168.3,
+        "close":16368.4,
         "volume":0.0,
         "timeframe":"M"
     }
