@@ -1,17 +1,6 @@
 [
     {
         "Timeframe":"D",
-        "datetime":"2022-09-06T03:45:00.000",
-        "symbol":"NSE:CNXFINANCE",
-        "open":18301.34960938,
-        "high":18385.69921875,
-        "low":18162.75,
-        "close":18197.90039063,
-        "volume":80737104.0,
-        "timeframe":"D"
-    },
-    {
-        "Timeframe":"D",
         "datetime":"2022-09-07T03:45:00.000",
         "symbol":"NSE:CNXFINANCE",
         "open":18052.0,
@@ -11000,6 +10989,17 @@
         "timeframe":"D"
     },
     {
+        "Timeframe":"D",
+        "datetime":"2026-09-18T03:45:00.000",
+        "symbol":"NSE:CNXFINANCE",
+        "open":25386.85,
+        "high":25576.6,
+        "low":25365.0,
+        "close":25510.0,
+        "volume":133528402.0,
+        "timeframe":"D"
+    },
+    {
         "Timeframe":"W",
         "datetime":"2011-09-05T03:45:00.000",
         "symbol":"NSE:CNXFINANCE",
@@ -19630,8 +19630,8 @@
         "open":25682.7,
         "high":25729.45,
         "low":25057.25,
-        "close":25318.35,
-        "volume":369990161.0,
+        "close":25510.0,
+        "volume":503518563.0,
         "timeframe":"W"
     },
     {
@@ -21621,8 +21621,8 @@
         "open":26171.35,
         "high":26195.9,
         "low":25057.25,
-        "close":25318.35,
-        "volume":1402577583.0,
+        "close":25510.0,
+        "volume":1536105985.0,
         "timeframe":"M"
     }
 ]
