@@ -4812,7 +4812,7 @@
         "symbol":"NSE:NIFTY_RURAL",
         "open":14831.4,
         "high":14876.85,
-        "low":14819.9,
+        "low":14813.15,
         "close":14830.9,
         "volume":0.0,
         "timeframe":"D"
@@ -4880,6 +4880,17 @@
         "high":14396.55,
         "low":14266.4,
         "close":14296.05,
+        "volume":0.0,
+        "timeframe":"D"
+    },
+    {
+        "Timeframe":"D",
+        "datetime":"2026-09-30T03:45:00.000",
+        "symbol":"NSE:NIFTY_RURAL",
+        "open":14307.4,
+        "high":14363.4,
+        "low":14232.5,
+        "close":14254.0,
         "volume":0.0,
         "timeframe":"D"
     },
@@ -5912,8 +5923,8 @@
         "symbol":"NSE:NIFTY_RURAL",
         "open":14593.45,
         "high":14600.85,
-        "low":14266.4,
-        "close":14296.05,
+        "low":14232.5,
+        "close":14254.0,
         "volume":0.0,
         "timeframe":"W"
     },
@@ -6154,8 +6165,8 @@
         "symbol":"NSE:NIFTY_RURAL",
         "open":15346.75,
         "high":15346.8,
-        "low":14266.4,
-        "close":14296.05,
+        "low":14232.5,
+        "close":14254.0,
         "volume":0.0,
         "timeframe":"M"
     }
