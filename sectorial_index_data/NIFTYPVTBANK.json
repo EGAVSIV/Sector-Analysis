@@ -1,17 +1,6 @@
 [
     {
         "Timeframe":"D",
-        "datetime":"2022-09-29T03:45:00.000",
-        "symbol":"NSE:NIFTYPVTBANK",
-        "open":19620.3,
-        "high":19721.0,
-        "low":19312.75,
-        "close":19391.7,
-        "volume":161589286.0,
-        "timeframe":"D"
-    },
-    {
-        "Timeframe":"D",
         "datetime":"2022-09-30T03:45:00.000",
         "symbol":"NSE:NIFTYPVTBANK",
         "open":19383.95,
@@ -10997,6 +10986,17 @@
         "low":26974.15,
         "close":27324.35,
         "volume":223573998.0,
+        "timeframe":"D"
+    },
+    {
+        "Timeframe":"D",
+        "datetime":"2026-10-14T03:45:00.000",
+        "symbol":"NSE:NIFTYPVTBANK",
+        "open":27278.8,
+        "high":27416.0,
+        "low":27128.2,
+        "close":27166.8,
+        "volume":213278665.0,
         "timeframe":"D"
     },
     {
@@ -21993,10 +21993,10 @@
         "datetime":"2026-10-12T03:45:00.000",
         "symbol":"NSE:NIFTYPVTBANK",
         "open":27266.2,
-        "high":27395.65,
+        "high":27416.0,
         "low":26974.15,
-        "close":27324.35,
-        "volume":361673529.0,
+        "close":27166.8,
+        "volume":574952194.0,
         "timeframe":"W"
     },
     {
@@ -24842,10 +24842,10 @@
         "datetime":"2026-10-01T03:45:00.000",
         "symbol":"NSE:NIFTYPVTBANK",
         "open":26737.6,
-        "high":27395.65,
+        "high":27416.0,
         "low":26531.95,
-        "close":27324.35,
-        "volume":1562119115.0,
+        "close":27166.8,
+        "volume":1775397780.0,
         "timeframe":"M"
     }
 ]
