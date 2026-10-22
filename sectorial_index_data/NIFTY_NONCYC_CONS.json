@@ -5038,6 +5038,17 @@
         "timeframe":"D"
     },
     {
+        "Timeframe":"D",
+        "datetime":"2026-10-22T03:45:00.000",
+        "symbol":"NSE:NIFTY_NONCYC_CONS",
+        "open":14029.3,
+        "high":14049.7,
+        "low":13888.35,
+        "close":13932.95,
+        "volume":0.0,
+        "timeframe":"D"
+    },
+    {
         "Timeframe":"W",
         "datetime":"2024-12-16T03:45:00.000",
         "symbol":"NSE:NIFTY_NONCYC_CONS",
@@ -6099,8 +6110,8 @@
         "symbol":"NSE:NIFTY_NONCYC_CONS",
         "open":14442.05,
         "high":14462.55,
-        "low":13950.8,
-        "close":14091.65,
+        "low":13888.35,
+        "close":13932.95,
         "volume":0.0,
         "timeframe":"W"
     },
@@ -6352,8 +6363,8 @@
         "symbol":"NSE:NIFTY_NONCYC_CONS",
         "open":14291.55,
         "high":14600.7,
-        "low":13950.8,
-        "close":14091.65,
+        "low":13888.35,
+        "close":13932.95,
         "volume":0.0,
         "timeframe":"M"
     }
