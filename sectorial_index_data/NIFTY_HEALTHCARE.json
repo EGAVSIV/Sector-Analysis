@@ -1,17 +1,6 @@
 [
     {
         "Timeframe":"D",
-        "datetime":"2022-10-13T03:45:00.000",
-        "symbol":"NSE:NIFTY_HEALTHCARE",
-        "open":8107.05,
-        "high":8164.5,
-        "low":8086.65,
-        "close":8123.35,
-        "volume":21960561.0,
-        "timeframe":"D"
-    },
-    {
-        "Timeframe":"D",
         "datetime":"2022-10-14T03:45:00.000",
         "symbol":"NSE:NIFTY_HEALTHCARE",
         "open":8201.2,
@@ -11000,6 +10989,17 @@
         "timeframe":"D"
     },
     {
+        "Timeframe":"D",
+        "datetime":"2026-10-28T03:45:00.000",
+        "symbol":"NSE:NIFTY_HEALTHCARE",
+        "open":15872.6,
+        "high":16126.75,
+        "low":15781.15,
+        "close":16100.1,
+        "volume":25731885.0,
+        "timeframe":"D"
+    },
+    {
         "Timeframe":"W",
         "datetime":"2021-08-09T03:45:00.000",
         "symbol":"NSE:NIFTY_HEALTHCARE",
@@ -13996,10 +13996,10 @@
         "datetime":"2026-10-26T03:45:00.000",
         "symbol":"NSE:NIFTY_HEALTHCARE",
         "open":15406.25,
-        "high":15980.65,
+        "high":16126.75,
         "low":15367.3,
-        "close":15917.6,
-        "volume":60307020.0,
+        "close":16100.1,
+        "volume":86038905.0,
         "timeframe":"W"
     },
     {
@@ -14691,8 +14691,8 @@
         "open":16099.0,
         "high":16152.1,
         "low":15195.75,
-        "close":15917.6,
-        "volume":369583063.0,
+        "close":16100.1,
+        "volume":395314948.0,
         "timeframe":"M"
     }
 ]
