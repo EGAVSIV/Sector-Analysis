@@ -1,17 +1,6 @@
 [
     {
         "Timeframe":"D",
-        "datetime":"2022-11-01T03:45:00.000",
-        "symbol":"NSE:NIFTY_OIL_AND_GAS",
-        "open":8138.0,
-        "high":8138.0,
-        "low":8005.35,
-        "close":8102.2,
-        "volume":61620054.0,
-        "timeframe":"D"
-    },
-    {
-        "Timeframe":"D",
         "datetime":"2022-11-02T03:45:00.000",
         "symbol":"NSE:NIFTY_OIL_AND_GAS",
         "open":8112.6,
@@ -11000,6 +10989,17 @@
         "timeframe":"D"
     },
     {
+        "Timeframe":"D",
+        "datetime":"2026-11-13T03:45:00.000",
+        "symbol":"NSE:NIFTY_OIL_AND_GAS",
+        "open":11349.25,
+        "high":11411.0,
+        "low":11272.05,
+        "close":11312.45,
+        "volume":63212928.0,
+        "timeframe":"D"
+    },
+    {
         "Timeframe":"W",
         "datetime":"2021-08-09T03:45:00.000",
         "symbol":"NSE:NIFTY_OIL_AND_GAS",
@@ -14020,8 +14020,8 @@
         "open":11297.95,
         "high":11492.7,
         "low":11232.6,
-        "close":11389.35,
-        "volume":310622196.0,
+        "close":11312.45,
+        "volume":373835124.0,
         "timeframe":"W"
     },
     {
@@ -14724,8 +14724,8 @@
         "open":10530.95,
         "high":11492.7,
         "low":10512.35,
-        "close":11389.35,
-        "volume":956264655.0,
+        "close":11312.45,
+        "volume":1019477583.0,
         "timeframe":"M"
     }
 ]
